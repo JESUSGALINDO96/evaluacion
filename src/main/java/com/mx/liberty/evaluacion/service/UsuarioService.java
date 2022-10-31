@@ -7,7 +7,7 @@ import com.mx.liberty.evaluacion.model.Usuario;
 
 public interface UsuarioService {
 	
-	Usuario save(Usuario usuario);
+	Usuario save(UsuarioDTO usuario);
 	
 	List<Usuario> getAll();
 	

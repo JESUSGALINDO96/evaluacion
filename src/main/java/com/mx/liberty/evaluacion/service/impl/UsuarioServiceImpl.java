@@ -4,10 +4,7 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
-import org.apache.catalina.mapper.Mapper;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 
 import com.mx.liberty.evaluacion.dao.UsuarioDAO;
@@ -24,7 +21,13 @@ public class UsuarioServiceImpl implements UsuarioService {
  
 	
 	@Override	
-	public Usuario save(Usuario  usu) {
+	public Usuario save(UsuarioDTO  usuario) {
+		Usuario usu = new Usuario();
+		usu.setEmail(usuario.getEmail());
+		usu.setEstatus(usuario.isEstatus());
+		usu.setFotoUsuario(usuario.getFotoUsuario());
+		usu.setGenero(usuario.getGenero());
+		usu.setNombre(usuario.getNombre());
 		return usuarioDAO.save(usu);
 	}
 
