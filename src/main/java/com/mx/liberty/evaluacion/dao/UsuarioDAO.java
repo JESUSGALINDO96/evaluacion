@@ -14,5 +14,8 @@ public interface UsuarioDAO {
 
 	boolean update (Usuario usuario);
 	
-//	boolean desactiva(Integer usuarioId);
-}
+	boolean desactiva(Integer usuarioId);
+	
+	boolean subirFoto(Integer id,String bas64);
+	
+ }

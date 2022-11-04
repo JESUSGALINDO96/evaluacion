@@ -10,22 +10,22 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="usuarios")
+@Table(name = "usuario", schema = "evaluacion")
 public class Usuario implements Serializable {
 
 	@Id
 	@Column(name = "id", unique = true, nullable = false)
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	@Column(name = "nombre", nullable = false, length = 25)
+	@Column(name = "nombre", nullable = false, length = 255)
 	private String nombre;
 	@Column(name = "email", nullable = false)
 	private String email;
-	@Column(name = "genero", nullable = false, length = 25)
+	@Column(name = "genero", nullable = false, length = 255)
 	private String genero;
-	@Column(name = "estatus", nullable = false, length = 25)
+	@Column(name = "estatus")
 	private boolean estatus;
-	@Column(name = "foto_usuario", nullable = false)
+	@Column(name = "foto_usuario", nullable = true)
 	private String fotoUsuario;
 
 	public Integer getId() {
@@ -44,7 +44,6 @@ public class Usuario implements Serializable {
 		this.nombre = nombre;
 	}
 
-  
 	public String getEmail() {
 		return email;
 	}
@@ -77,8 +76,10 @@ public class Usuario implements Serializable {
 		this.fotoUsuario = fotoUsuario;
 	}
 
- 
-
- 
+	@Override
+	public String toString() {
+		return "Usuario [id=" + id + ", nombre=" + nombre + ", email=" + email + ", genero=" + genero + ", estatus="
+				+ estatus + ", fotoUsuario=" + fotoUsuario + "]";
+	}
 
 }

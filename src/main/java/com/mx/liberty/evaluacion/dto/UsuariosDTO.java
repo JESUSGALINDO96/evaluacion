@@ -1,20 +1,12 @@
 package com.mx.liberty.evaluacion.dto;
 
-public class UsuarioDTO {
+public class UsuariosDTO {
 
-	private Integer id;
-	private String nombre;
+ 	private String nombre;
 	private String email;
 	private String genero;
 	private boolean estatus;
-  
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
+   
 
 	public String getNombre() {
 		return nombre;

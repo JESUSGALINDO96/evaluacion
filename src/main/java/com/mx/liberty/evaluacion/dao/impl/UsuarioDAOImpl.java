@@ -6,6 +6,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 
+import org.springframework.beans.Mergeable;
 import org.springframework.stereotype.Repository;
 
 import com.mx.liberty.evaluacion.dao.UsuarioDAO;
@@ -19,8 +20,7 @@ public class UsuarioDAOImpl implements UsuarioDAO  {
 	
 	
 	@Override
-	@Transactional
-	public Usuario save(Usuario usuario) {
+ 	public Usuario save(Usuario usuario) {
 		try {
 			em.persist(usuario);
 			return usuario;
@@ -33,14 +33,25 @@ public class UsuarioDAOImpl implements UsuarioDAO  {
 
 	@Override
 	public List<Usuario> getAll() {
-		  return em.createQuery("from Usuario where estatus=true").getResultList();
+		return em.createQuery("from Usuario where estatus = true ").getResultList();
 	}
 
 
 	@Override
 	public boolean update(Usuario usuario) {
 		try {
-			 em.merge(usuario);
+			System.out.println(usuario.toString());
+			 em.createQuery(" update Usuario set estatus=:estatus, "
+			 		+ " email =:email, "
+			 		+ " genero =:genero, "
+			 		+ " nombre =:nombre "
+			 		+ " where id=:id ")
+			 .setParameter("id", usuario.getId())
+			 .setParameter("email", usuario.getEmail())
+			 .setParameter("genero", usuario.getGenero())
+			 .setParameter("nombre", usuario.getNombre())
+			 .setParameter("estatus", usuario.isEstatus())
+			 .executeUpdate();
 			 return true;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -53,21 +64,43 @@ public class UsuarioDAOImpl implements UsuarioDAO  {
 	@Override
 	public Usuario getById(Integer id) {
 		 return em.find(Usuario.class, id);
+//		return em.createQuery("from Usuario where estatus = true ")
+//				.getFirstResult();
 	}
 
 
-//	@Override
-//	public boolean desactiva(Integer usuarioId) {
-//		try {
-//			 em.createQuery("Usuario "
-//			 		+ " set estatus=false "
-//			 		+ " where id=:usuarioId ")
-//			 .setParameter("usuarioId", usuarioId).executeUpdate();
-//			 return true;
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//			return false;
-//		}
-//	}
+	@Override
+	public boolean desactiva(Integer usuarioId) {
+		try {
+			 em.createQuery(" update Usuario "
+			 		+ " set estatus=false "
+			 		+ " where id=:usuarioId ")
+			 .setParameter("usuarioId", usuarioId)
+			 .executeUpdate();
+			 return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
 
+
+	@Override
+	public boolean subirFoto(Integer id, String bas64) {
+		try {
+			 em.createQuery(" update Usuario "
+			 		+ " set fotoUsuario=:bas64 "
+			 		+ " where id=:id ")
+			 .setParameter("bas64", bas64)
+			 .setParameter("id", id)
+			 .executeUpdate();
+			 return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+
+
+	 
 }
