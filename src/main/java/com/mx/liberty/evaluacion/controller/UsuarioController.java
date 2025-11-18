@@ -41,6 +41,7 @@ public class UsuarioController {
 
 	
 	//esto es un comebtario para sbir a git
+	// comentario 2
 	@Operation(summary = "Guarda registro de Usuario")
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200", description = "Usuario guardado correctamente", content = {
